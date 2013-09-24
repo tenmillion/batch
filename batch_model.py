@@ -63,12 +63,12 @@ Iext : amp
 
 eqs_esyn = '''
 g_jk : nS	# synaptic weight
-Iesyn = (g_jk * se_pre)*(Ee-v_post) : amp
+Iesyn = (g_jk * se_pre)*(Ee-v_post)/100.0 : amp
 '''
 
 eqs_isyn = '''
 g_jk : nS	# synaptic weight
-Iisyn = (g_jk * si_pre)*(Ei-v_post) : amp
+Iisyn = (g_jk * si_pre)*(Ei-v_post)/100.0 : amp
 '''
 
 myclock=Clock(dt=timestep)

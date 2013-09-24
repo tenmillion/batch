@@ -26,11 +26,11 @@ Ee = 0 * mV
 Ei = -80 * mV
 # we = 6 * nS # excitatory synaptic weight (voltage)
 # wi = 67 * nS # inhibitory synaptic weight
-Iext_e = float(sys.argv[1]) * uA  # original value 1.5 nA?
-Iext_i = float(sys.argv[2]) * uA  # original value 5 nA?
+Iext_e = float(sys.argv[1]) * nA  # original value 1.5 nA?
+Iext_i = float(sys.argv[2]) * nA  # original value 5 nA?
 alpha_ee	= float(sys.argv[3]) # original 0.12
-alpha_ie	= float(sys.argv[4]) # original 0.06
-alpha_ei	= float(sys.argv[5]) # original 0.2
+alpha_ei	= float(sys.argv[4]) # original 0.2
+alpha_ie	= float(sys.argv[5]) # original 0.06
 alpha_ii	= float(sys.argv[6]) # original 0.02
 
 # The model

@@ -4,7 +4,7 @@ from sys import *
 # Parameters
 N=200
 timestep = 0.1 * ms
-phi = float(sys.argv[7]) # original 3.0
+phi = 3.0 # original 3.0
 
 area = 20000 * umetre ** 2
 Cm = (1 * ufarad * cm ** -2) * area
@@ -26,13 +26,12 @@ Ee = 0 * mV
 Ei = -80 * mV
 # we = 6 * nS # excitatory synaptic weight (voltage)
 # wi = 67 * nS # inhibitory synaptic weight
-Iext_e = float(sys.argv[1]) * nA  # original value 1.5 nA?
-Iext_i = float(sys.argv[2]) * nA  # original value 5 nA?
-alpha_ee	= float(sys.argv[3]) # original 0.12
-alpha_ei	= float(sys.argv[4]) # original 0.2
-alpha_ie	= float(sys.argv[5]) # original 0.06
-alpha_ii	= float(sys.argv[6]) # original 0.02
-pulse2 = float(sys.argv[8]) * pA # second 1ms pulse
+Iext_e = 1.5 * nA  # original value 1.5 uA/cm2?
+Iext_i = 5 * nA  # original value 5 uA/cm2?
+alpha_ee	= 0.215 # original 0.12
+alpha_ei	= 0.2 # original 0.2
+alpha_ie	= 0.06 # original 0.06
+alpha_ii	= 0.02 # original 0.02
 
 # The model
 
@@ -135,19 +134,19 @@ print 'done.'
 print "Setting up external input..."
 Pi.Iext = TimedArray([Iext_i]*int((500*ms)/timestep),start=0*ms,dt=timestep)
 for j in range(21,80):
-	Pe[j].Iext = TimedArray([0*uA]*int((112*ms)/timestep)+[Iext_e*exp(-60.0*(float(j-(len(Pe)/2))/len(Pe))**2.0)]*int((30*ms)/timestep)+[0*uA]*int((250*ms)/timestep)+[pulse2]*int((1*ms)/timestep),start=0*ms,dt=timestep)
+	Pe[j].Iext = TimedArray([0*uA]*int((112*ms)/timestep)+[Iext_e*exp(-60.0*(float(j-(len(Pe)/2))/len(Pe))**2.0)]*int((30*ms)/timestep),start=0*ms,dt=timestep)
 print "done."
 	
 # Record the number of spikes and voltage traces
 trace = StateMonitor(Pe, 'v', record=arange(0,len(Pe)))
 trace2 = StateMonitor(Pi, 'v', record=arange(0,len(Pi)))
-filename = 'aee'+argv[3]+'aei'+argv[4]+'phi'+argv[7]+'pulse'+argv[8]+'.txt'
+filename = 'original.txt'
 Me = FileSpikeMonitor(Pe,'Pe_'+filename)
 Mi = FileSpikeMonitor(Pi,'Pi_'+filename)
 
 print filename
 print "Running simulation..."
-run(1000 * ms)
+run(500 * ms)
 print "done."
 print "Excitatory spikes: ", Me.nspikes
 print "Inhibitory spikes: ", Mi.nspikes

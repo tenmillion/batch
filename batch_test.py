@@ -26,12 +26,12 @@ Ee = 0 * mV
 Ei = -80 * mV
 # we = 6 * nS # excitatory synaptic weight (voltage)
 # wi = 67 * nS # inhibitory synaptic weight
-Iext_e = 1.5 * nA  # original value 1.5 uA/cm2?
-Iext_i = 5 * nA  # original value 5 uA/cm2?
-alpha_ee	= 0.215 # original 0.12
-alpha_ei	= 0.2 # original 0.2
-alpha_ie	= 0.06 # original 0.06
-alpha_ii	= 0.02 # original 0.02
+Iext_e = 1.0 * nA  # original value 1.5 uA/cm2?
+Iext_i = 0.1 * nA  # original value 5 uA/cm2?
+alpha_ee	= 0.1 # original 0.12
+alpha_ei	= 6 # original 0.2
+alpha_ie	= 0.1 # original 0.06
+alpha_ii	= 2 # original 0.02
 
 # The model
 
@@ -62,12 +62,12 @@ Iext : amp
 
 eqs_esyn = '''
 g_jk : nS	# synaptic weight
-Iesyn = (g_jk * se_pre)*(Ee-v_post)/100.0 : amp
+Iesyn = (g_jk * se_post)*(Ee-v_post)/100.0 : amp
 '''
 
 eqs_isyn = '''
 g_jk : nS	# synaptic weight
-Iisyn = (g_jk * si_pre)*(Ei-v_post)/100.0 : amp
+Iisyn = (g_jk * si_post)*(Ei-v_post)/100.0 : amp
 '''
 
 myclock=Clock(dt=timestep)
@@ -140,7 +140,7 @@ print "done."
 # Record the number of spikes and voltage traces
 trace = StateMonitor(Pe, 'v', record=arange(0,len(Pe)))
 trace2 = StateMonitor(Pi, 'v', record=arange(0,len(Pi)))
-filename = 'original.txt'
+filename = 'ee'+str(alpha_ee)+'ei'+str(alpha_ei)+'ie'+str(alpha_ie)+'ii'+str(alpha_ii)+'.txt'
 Me = FileSpikeMonitor(Pe,'Pe_'+filename)
 Mi = FileSpikeMonitor(Pi,'Pi_'+filename)
 
